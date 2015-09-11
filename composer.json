@@ -9,8 +9,8 @@
     ],
     "require": {},
     "autoload": {
-        "psr-0": {
-            "topicWidge":        "classes/"
+        "psr-4": {
+            "TopicWidge\\":        "src/"
         }
     }
 }

@@ -13,7 +13,6 @@
 <?php
 
 require 'vendor/autoload.php';
-require 'classes/topicWidge.php';
 
 	if(isset($_POST['submit'])) {
 		if(isset($_GET['go'])) {
@@ -24,7 +23,7 @@ require 'classes/topicWidge.php';
 				echo $topic;
 
 				//make an instance of the topicWidge class
-				$searched_topic = new topicWidge\topicWidge();
+				$searched_topic = new TopicWidge\TopicWidge();
 				//use the echo_topic method
 				$searched_topic->echo_topic($topic);
 			}
