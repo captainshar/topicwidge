@@ -1,0 +1,16 @@
+{
+    "name": "shar/topicwidge",
+    "description": "Topic Widget for Technical Writers",
+    "authors": [
+        {
+            "name": "Sharon C",
+            "email": "captainshar@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-0": {
+            "topicWidge":        "classes/"
+        }
+    }
+}
