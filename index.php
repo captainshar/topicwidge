@@ -32,6 +32,9 @@ require 'vendor/autoload.php';
 	else {
 		echo  "<p>Enter a topic, pretty please.</p>";
 	}
+
+	// next step: add a session that tracks all the search terms in one session
+	// homework: add https://packagist.org/packages/guzzlehttp/guzzle, get only the results
 ?>
 
 </body>
