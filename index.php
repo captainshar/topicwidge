@@ -14,23 +14,42 @@
 
 require 'vendor/autoload.php';
 
-	if(isset($_POST['submit'])) {
-		if(isset($_GET['go'])) {
-			// I took out this input matching line
-			// if(preg_match("/^[^a-z_\-0-9]/i", $_POST['topic'])) {
-			if($_POST['topic']) {
-				$topic=$_POST['topic'];
-				echo $topic;
-
-				//make an instance of the topicWidge class
-				$searched_topic = new TopicWidge\TopicWidge();
-				//use the echo_topic method
-				$searched_topic->echo_topic($topic);
-			}
-		}
+	if (session_status() == PHP_SESSION_NONE) {
+    	session_start();
+    	get_searched_topic();
+    	echo  "<p>Enter a topic, pretty please.</p>";
 	}
 	else {
-		echo  "<p>Enter a topic, pretty please.</p>";
+
+		$_SESSION["current_topic"] = 
+
+		$_SESSION["topics_arr"] = array($_SESSION["current_topic"]);
+					var_dump($_SESSION["session_topics_arr"])
+					echo "Session variables are set.";
+					print_r($_SESSION);
+	}
+
+	function get_searched_topic() {
+		if(isset($_POST['submit'])) {
+			if(isset($_GET['go'])) {
+				// I took out this input matching line
+				// if(preg_match("/^[^a-z_\-0-9]/i", $_POST['topic'])) {
+				if($_POST['topic']) {
+					$topic=$_POST['topic'];
+					echo $topic;
+
+					//make an instance of the topicWidge class
+					$searched_topic = new TopicWidge\TopicWidge();
+					//use the echo_topic method
+					$searched_topic->echo_topic($topic);
+
+					return $topic;
+				}
+			}
+		}
+		else {
+			return null;
+		}
 	}
 
 	// next step: add a session that tracks all the search terms in one session
