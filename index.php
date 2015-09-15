@@ -14,43 +14,44 @@
 
 require 'vendor/autoload.php';
 
-	if (session_status() == PHP_SESSION_NONE) {
-    	session_start();
-    	get_searched_topic();
-    	echo  "<p>Enter a topic, pretty please.</p>";
-	}
-	else {
+$topic = "";
 
-		$_SESSION["current_topic"] = 
+	//Start a session
+	session_start();
 
-		$_SESSION["topics_arr"] = array($_SESSION["current_topic"]);
-					var_dump($_SESSION["session_topics_arr"])
-					echo "Session variables are set.";
-					print_r($_SESSION);
-	}
+	// Initializing session things
+	$topics_arr = isset($_SESSION["topics_arr"]) ? $_SESSION["topics_arr"] : array();
 
-	function get_searched_topic() {
-		if(isset($_POST['submit'])) {
-			if(isset($_GET['go'])) {
-				// I took out this input matching line
-				// if(preg_match("/^[^a-z_\-0-9]/i", $_POST['topic'])) {
-				if($_POST['topic']) {
-					$topic=$_POST['topic'];
-					echo $topic;
+	//Is the form submitted?
+	if(isset($_POST['submit'])) {
+		if(isset($_GET['go'])) {
+			if($_POST['topic']) {
+				$topic=$_POST['topic'];
+				echo nl2br("\n You entered " . $topic . "\n");
 
-					//make an instance of the topicWidge class
-					$searched_topic = new TopicWidge\TopicWidge();
-					//use the echo_topic method
-					$searched_topic->echo_topic($topic);
+				//add topic to session array
+				array_push($_SESSION["topics_arr"], $topic);
 
-					return $topic;
-				}
+				//make an instance of the topicWidge class
+				$searched_topic = new TopicWidge\TopicWidge();
+				//use the echo_topic method
+				$searched_topic->echo_topic($topic);
+
+				//start the recent search terms list
+				echo nl2br("\n Recent search terms: \n");
 			}
 		}
-		else {
-			return null;
-		}
 	}
+	else {
+		echo  "<p>Enter a topic, pretty please.</p>";
+	}
+
+	//Print out the array of searched topics in this session, most recent first and with HTML breaks
+	$topics_recent = array_reverse($topics_arr, true);
+	foreach($topics_recent as $key => $t) {
+		echo nl2br($t . "\n");
+	}
+
 
 	// next step: add a session that tracks all the search terms in one session
 	// homework: add https://packagist.org/packages/guzzlehttp/guzzle, get only the results
