@@ -20,14 +20,14 @@ $topic = "";
 	session_start();
 
 	// Initializing session things
-	$topics_arr = isset($_SESSION["topics_arr"]) ? $_SESSION["topics_arr"] : array();
+	$topics_arr = isset($_SESSION["topics_arr"]) ? $_SESSION["topics_arr"] : [];
 
 	//Is the form submitted?
 	if(isset($_POST['submit'])) {
 		if(isset($_GET['go'])) {
 			if($_POST['topic']) {
 				$topic=$_POST['topic'];
-				echo nl2br("\n You entered " . $topic . "\n");
+				echo "< br /> You entered " . $topic . "< br />";
 
 				//add topic to session array
 				array_push($_SESSION["topics_arr"], $topic);
@@ -38,7 +38,7 @@ $topic = "";
 				$searched_topic->echo_topic($topic);
 
 				//start the recent search terms list
-				echo nl2br("\n Recent search terms: \n");
+				echo "< br /> Recent search terms: < br />";
 			}
 		}
 	}
@@ -48,8 +48,8 @@ $topic = "";
 
 	//Print out the array of searched topics in this session, most recent first and with HTML breaks
 	$topics_recent = array_reverse($topics_arr, true);
-	foreach($topics_recent as $key => $t) {
-		echo nl2br($t . "\n");
+	foreach($topics_recent as $t) {
+		echo $t . "< br />";
 	}
 
 
