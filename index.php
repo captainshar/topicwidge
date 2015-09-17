@@ -52,6 +52,21 @@ $topic = "";
 		echo $t . "< br />";
 	}
 
+	// Use Guzzle to display the search results from the DO community tutorials
+	use GuzzleHttp\Client;
+
+	//create base url for request
+	$client_tuts = new Client(['base_uri' => 'https://www.digitalocean.com/']);
+
+	$response_tuts = $client_tuts->get('community/tutorials');
+
+	$code = $response_tuts->getStatusCode(); // 200
+
+	// Check if a header exists.
+	if ($response_tuts->hasHeader('Content-Length')) {
+	    echo "It exists";
+	}
+
 
 	// next step: add a session that tracks all the search terms in one session
 	// homework: add https://packagist.org/packages/guzzlehttp/guzzle, get only the results
