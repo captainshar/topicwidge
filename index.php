@@ -52,7 +52,7 @@ $topic = "";
 	//create base url for request
 	$client_tuts = new Client(['base_uri' => 'https://www.digitalocean.com/']);
 
-	$response_tuts = $client_tuts->get('community/tutorials');
+	$response_tuts = $client_tuts->get('community/tutorials' . '?q=' . $topic);
 
 	$code = $response_tuts->getStatusCode(); // 200
 
