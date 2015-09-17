@@ -27,7 +27,7 @@ $topic = "";
 		if(isset($_GET['go'])) {
 			if($_POST['topic']) {
 				$topic=$_POST['topic'];
-				echo "< br /> You entered " . $topic . "< br />";
+				echo "<br/> You entered " . $topic . "<br/>";
 
 				//add topic to session array
 				array_push($_SESSION["topics_arr"], $topic);
@@ -38,18 +38,12 @@ $topic = "";
 				$searched_topic->echo_topic($topic);
 
 				//start the recent search terms list
-				echo "< br /> Recent search terms: < br />";
+				echo "<br/> Recent search terms: <br/>";
 			}
 		}
 	}
 	else {
 		echo  "<p>Enter a topic, pretty please.</p>";
-	}
-
-	//Print out the array of searched topics in this session, most recent first and with HTML breaks
-	$topics_recent = array_reverse($topics_arr, true);
-	foreach($topics_recent as $t) {
-		echo $t . "< br />";
 	}
 
 	// Use Guzzle to display the search results from the DO community tutorials
@@ -62,10 +56,21 @@ $topic = "";
 
 	$code = $response_tuts->getStatusCode(); // 200
 
-	// Check if a header exists.
-	if ($response_tuts->hasHeader('Content-Length')) {
-	    echo "It exists";
+	if ($response_tuts->getStatusCode() == 200) {
+    	echo "Request was successful<br/>";
+    
+    	$body_tuts = $response_tuts->getBody();
+    	//var_dump($body_tuts);
+    	echo $body_tuts;
 	}
+
+	//Print out the array of searched topics in this session, most recent first and with HTML breaks
+	$topics_recent = array_reverse($topics_arr, true);
+	foreach($topics_recent as $t) {
+		echo $t . "<br/>";
+	}
+
+	
 
 
 	// next step: add a session that tracks all the search terms in one session
