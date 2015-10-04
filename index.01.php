@@ -14,22 +14,9 @@
 <?php
 
 // Using Composer's autoload feature for all my classes
-require_once __DIR__.'/vendor/autoload.php';
+require 'vendor/autoload.php';
 
-// Use Guzzle to display the search results from the DO community tutorials
-use GuzzleHttp\Client;
-// Use Symfony's Response class
-use Symfony\Component\HttpFoundation\Response;
-
-$app = new Silex\Application();
-// enable debug mode
-
-$app['debug'] = true;
-
-// ... definitions
-
-$app->post('/', function () {
-    // Initialize the topic with an empty string
+// Initialize the topic with an empty string
 $topic = "";
 
 	//Start a session
@@ -39,7 +26,7 @@ $topic = "";
 	$topics_arr = isset($_SESSION["topics_arr"]) ? $_SESSION["topics_arr"] : [];
 
 	// Check session variables
-	// Print_r ($_SESSION);
+	Print_r ($_SESSION);
 
 	// Is the form submitted?
 	if(isset($_POST['submit'])) {
@@ -57,6 +44,9 @@ $topic = "";
 
 				// Use the echo_topic method
 				$searched_topic->echo_topic($topic);
+
+				// Start the recent search terms list
+				echo "<br/> Recent search terms: <br/>";
 			}
 		}
 	}
@@ -64,6 +54,9 @@ $topic = "";
 	else {
 		echo  "<p>Enter a topic, pretty please.</p>";
 	}
+
+	// Use Guzzle to display the search results from the DO community tutorials
+	use GuzzleHttp\Client;
 
 	// Create base URL for request
 	$client_tuts = new Client(['base_uri' => 'https://www.digitalocean.com/']);
@@ -112,36 +105,25 @@ $topic = "";
 			    );
 			}
 		}
-
 		// Show the $links array values, fully expanded
 		print_r(array_values($links));
 
 		// Make 'em links again
 
 	}
-	// Start the recent search terms list
-	echo "<br/> Recent search terms: <br/>";
-	// Print out the array of searched topics in this session, most recent first and with HTML breaks
+	//Print out the array of searched topics in this session, most recent first and with HTML breaks
 	$topics_recent = array_reverse($topics_arr, true);
-	// foreach($topics_recent as $t) {
-	// 	echo $t . "<br/>";
-	// }
+	foreach($topics_recent as $t) {
+		echo $t . "<br/>";
+	}
 
-	// Print_r ($_SESSION);
-
-    return new Response(implode("<br/>", $topics_recent));
-});
-
-$app->run();
-
-
+	Print_r ($_SESSION);
 
 
 	// DONE: add a session that tracks all the search terms in one session
 	// DONE: add https://packagist.org/packages/guzzlehttp/guzzle
 	// DONE: Filter only the search results from Guzzle, use a class for this, use regex or http://php.net/manual/en/class.domdocument.php
-	// DONE: Use Silex as a framework
-	// TODO: Use Twig for templates
+	// TODO: Use Silex as a framework and Twig as templates
 ?>
 
 </body>
