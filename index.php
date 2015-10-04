@@ -22,9 +22,14 @@ use GuzzleHttp\Client;
 use Symfony\Component\HttpFoundation\Response;
 
 $app = new Silex\Application();
-// enable debug mode
 
+// enable debug mode
 $app['debug'] = true;
+
+// Twig for templates / views
+$app->register(new Silex\Provider\TwigServiceProvider(), array(
+    'twig.path' => __DIR__.'/views',
+));
 
 // ... definitions
 
