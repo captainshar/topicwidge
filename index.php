@@ -141,7 +141,7 @@ $topic = "";
 
 
 // Let's try a default Twig page on a new page
-$app->get('/twigtest', function ($response_string) use ($app) {
+$app->get('/twigtest', function () use ($app) {
     return $app['twig']->render('test1.twig', array(
         'topics_recent' => $response_string,
     ));
