@@ -33,7 +33,7 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
 
 // ... definitions
 
-$app->post('/', function () {
+$response_string = $app->post('/', function () {
     // Initialize the topic with an empty string
 $topic = "";
 
@@ -135,6 +135,16 @@ $topic = "";
 	// Print_r ($_SESSION);
 
     return new Response(implode("<br/>", $topics_recent));
+});
+
+// Getting the $topics_recent variable outside of that block
+
+
+// Let's try a default Twig page on a new page
+$app->get('/twigtest', function ($response_string) use ($app) {
+    return $app['twig']->render('test1.twig', array(
+        'topics_recent' => $response_string,
+    ));
 });
 
 $app->run();
