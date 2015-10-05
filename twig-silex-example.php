@@ -11,6 +11,20 @@ function (Request $request) <- are treated in a special way by Silex.
 In this case, it will just make the Request available for your anonymous function
 (which is, in fact, a controller) -->
 
+<!-- you just need to change the form method.
+
+so it will be <form method="GET"
+
+the link would looks something like this:
+
+	http://asdasasd.asda/search/?parameter=asdasdas -->
+
+<!--
+
+	when you access the page, the app->run will execute, 
+	then it will match the route you used (/) and execute that block - 
+	so the twig template will be rendered -->
+
 $app->get('/', function(Request $request) use ($app) {
    $parameter = $request->query->get('parameter');
    
