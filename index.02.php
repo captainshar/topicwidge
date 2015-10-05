@@ -33,7 +33,7 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
 
 // ... definitions
 
-$response_string = $app->post('/', function () {
+$app->post('/', function () {
     // Initialize the topic with an empty string
 $topic = "";
 
@@ -141,11 +141,11 @@ $topic = "";
 
 
 // Let's try a default Twig page on a new page
-$app->get('/twigtest', function () use ($app) {
-    return $app['twig']->render('test1.twig', array(
-        'topics_recent' => $response_string,
-    ));
-});
+// $app->get('/twigtest', function () use ($app) {
+//     return $app['twig']->render('test1.twig', array(
+//         'topics_recent' => $response_string,
+//     ));
+// });
 
 $app->run();
 
