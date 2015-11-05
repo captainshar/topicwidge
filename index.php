@@ -10,28 +10,33 @@ use GuzzleHttp\Client;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
-// Twig for templates / views
-$app->register(new Silex\Provider\TwigServiceProvider(), array(
-    'twig.path' => __DIR__.'/views',
-));
-
 // Create a new Silex app
 $app = new Silex\Application();
 
 // enable debug mode
 $app['debug'] = true;
 
+// Twig for templates / views
+$app->register(new Silex\Provider\TwigServiceProvider(), array(
+    'twig.path' => __DIR__.'/views',
+));
 
 // Create the GET request for the form
-$app->get('/', function(Request $request) use ($app) {
-   $parameter = $request->query->get('parameter');
-   
-   // Do all your logic here - use guzzle to make a search, etc. No output yet
-   
+$app->get('/', function(Request $request) use ($app) {  
+	
+	// Initialize the topic with an empty string
+	$topic = "";
+
+	// Catch the topic variable from the submission form in template.twig
+	$topic = $request->query->get('topic');
+
+	// Do all your logic here - use guzzle to make a search, etc. No output yet
+
 	// Create base URL for request for a new Guzzle object
 	$client_tuts = new Client(['base_uri' => 'https://www.digitalocean.com/']);
 
 	// Add the search term to the URL
+	// NEED: How are we getting $topic now with the Twig page???
 	$response_tuts = $client_tuts->get('community/tutorials' . '?q=' . $topic);
 
 	// If I got a successful 200 response from the page, parse it 
@@ -40,8 +45,7 @@ $app->get('/', function(Request $request) use ($app) {
     	echo "Request was successful<br/>";
     	
     	//Get the body of the page from Guzzle, could 'echo $body_tuts;'
-    	$body_tuts = $response_tuts->getBody();
-    	
+    	$body_tuts = $response_tuts->getBody();    	
 
     	// Create a DOM parser object so I can wrangle all the HTML I just sucked in
 		$dom = new DOMDocument();
@@ -82,4 +86,5 @@ $app->get('/', function(Request $request) use ($app) {
       'topics_recent' => $topics_recent, // Array of recent search terms
       'links_docommunity' => $links_docommunity, // Array of links from DO Community tutorial search results
    ]);
+	}
 });
