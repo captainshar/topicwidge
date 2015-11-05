@@ -1,3 +1,5 @@
+TEST
+
 <?php
 
 // Use Composer's autoload feature for all my classes
