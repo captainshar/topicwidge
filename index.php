@@ -1,5 +1,3 @@
-TEST
-
 <?php
 
 // Use Composer's autoload feature for all my classes
@@ -28,8 +26,10 @@ $app->get('/', function(Request $request) use ($app) {
 	
 	// Initialize the topic with an empty string
 	$topic = "";
+	$topics_recent = [];
+	$links_docommunity = [];
 
-	// Catch the topic variable from the submission form in template.twig
+	// Catch the topic variable from the submission form in index.twig
 	$topic = $request->query->get('topic');
 
 	// Do all your logic here - use guzzle to make a search, etc. No output yet
@@ -83,10 +83,13 @@ $app->get('/', function(Request $request) use ($app) {
 		}
 	}
    // Render the Twig view to actually show things to the user
-   return $app['twig']->render('template.twig', [
+   return $app['twig']->render('index.twig', [
       'topic' => $topic, // Sending the most recent search term
       'topics_recent' => $topics_recent, // Array of recent search terms
       'links_docommunity' => $links_docommunity, // Array of links from DO Community tutorial search results
    ]);
 
 });
+
+// OMG I forgot to run the app :P
+$app->run();
