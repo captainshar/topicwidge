@@ -81,12 +81,12 @@ $app->get('/', function(Request $request) use ($app) {
 			    );
 			}
 		}
-
+	}
    // Render the Twig view to actually show things to the user
    return $app['twig']->render('template.twig', [
       'topic' => $topic, // Sending the most recent search term
       'topics_recent' => $topics_recent, // Array of recent search terms
       'links_docommunity' => $links_docommunity, // Array of links from DO Community tutorial search results
    ]);
-	}
+
 });
