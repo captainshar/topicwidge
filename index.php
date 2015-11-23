@@ -38,7 +38,6 @@ $app->get('/', function(Request $request) use ($app) {
 	$client_tuts = new Client(['base_uri' => 'https://www.digitalocean.com/']);
 
 	// Add the search term to the URL
-	// NEED: How are we getting $topic now with the Twig page???
 	$response_tuts = $client_tuts->get('community/tutorials' . '?q=' . $topic);
 
 	// If I got a successful 200 response from the page, parse it 
@@ -47,7 +46,11 @@ $app->get('/', function(Request $request) use ($app) {
     	echo "Request was successful<br/>";
     	
     	//Get the body of the page from Guzzle, could 'echo $body_tuts;'
-    	$body_tuts = $response_tuts->getBody();    	
+    	$body_tuts = $response_tuts->getBody();  
+    	// echo $body_tuts;  	Ew! Why is it looking on localhost for this URL
+    	// When it clearly got content from the Community site with an empty search?
+    	// NotFoundHttpException in RouterListener.php line 159:
+		// No route found for "GET /community/search" (from "http://localhost:8000/")
 
     	// Create a DOM parser object so I can wrangle all the HTML I just sucked in
 		$dom = new DOMDocument();
@@ -81,7 +84,14 @@ $app->get('/', function(Request $request) use ($app) {
 			    );
 			}
 		}
+		// Set the $links_docommunity variable to the search results from the DO Community page
+		$links_docommunity = $links;
 	}
+	// Sanity checking some variables
+	var_dump($topics_recent);
+	// var_dump($links_docommunity);
+	// TODO: This is empty right now. Looks like we're not storing any search terms
+
    // Render the Twig view to actually show things to the user
    return $app['twig']->render('index.twig', [
       'topic' => $topic, // Sending the most recent search term
