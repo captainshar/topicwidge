@@ -15,16 +15,24 @@
 
 <!-- logic to check form submission and extract the variable 
 
+this is handled by the line in index.php:
 
-Should be something like
+// Catch the topic variable from the submission form in index.twig
+$topic = $request->query->get('topic');
 
-if get 'topic' 
+-->
 
-$topic=$_GET['topic'];
+<!-- and then here we render the recent search terms and the external page results
 
-And maybe add it to the array? Or maybe the controller should handle that -->
+That's it? We just use the variables from the return $app['twig']->render('index.twig', []); block now? -->
 
-<!-- and then here we render the recent search terms and the external page results -->
+<p>You searched for the topic {{ topic }}.</p>
+
+{% for topic_recent in topics_recent %}
+    * {{ topic_recent }}
+{% else %}
+    Please enter a search term.
+{% endfor %}
 
 </body>
 </html>
