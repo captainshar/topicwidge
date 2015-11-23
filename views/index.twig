@@ -15,7 +15,7 @@
 
 <!-- logic to check form submission and extract the variable 
 
-this is handled by the line in index.php:
+this is handled by the line in my controller, index.php:
 
 // Catch the topic variable from the submission form in index.twig
 $topic = $request->query->get('topic');
@@ -27,6 +27,8 @@ $topic = $request->query->get('topic');
 That's it? We just use the variables from the return $app['twig']->render('index.twig', []); block now? -->
 
 <p>You searched for the topic {{ topic }}.</p>
+
+<!-- TODO: Tracking my search terms in an array -->
 
 {% for topic_recent in topics_recent %}
     * {{ topic_recent }}
