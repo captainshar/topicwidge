@@ -26,7 +26,15 @@ $app->get('/', function(Request $request) use ($app) {
 	
 	// Initialize the topic with an empty string
 	$topic = "";
-	$topics_recent = [];
+
+	// Initialize the array of recent topics if it's not already set
+	if (isset($topics_recent)) {
+    	echo "The topics_recent var is set so I will print.";
+	}
+	$topics_recent = isset($topics_recent) ? $topics_recent : [];
+	if (isset($topics_recent)) {
+    	echo "The topics_recent var is set so I will print.";
+	}
 	$links_docommunity = [];
 
 	// Catch the topic variable from the submission form in index.twig
