@@ -31,9 +31,7 @@ That's it? We just use the variables from the return $app['twig']->render('index
 <!-- TODO: Tracking my search terms in an array -->
 
 {% for topic_recent in topics_recent %}
-    * {{ topic.name }}
-{% else %}
-    Please enter a search term.
+   {{ dump(topic_recent) }}
 {% endfor %}
 
 <!-- Showing search results; need to parse these better -->
