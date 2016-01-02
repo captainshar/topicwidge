@@ -40,9 +40,6 @@ $app->get('/', function(Request $request) use ($app) {
 	// Catch the topic variable from the submission form in index.twig
 	$topic = $request->query->get('topic');
 
-	// Add topic to topics_recent
-	array_push($topics_recent, $topic);
-
 	// Do all your logic here - use guzzle to make a search, etc. No output yet
 
 	// Create base URL for request for a new Guzzle object
@@ -100,9 +97,11 @@ $app->get('/', function(Request $request) use ($app) {
 	}
 	// Sanity checking some variables
 	echo "This is the list of recent topics<br/>";
+	// Add topic to topics_recent
+	$topics_recent[] = $topic;
 	var_dump($topics_recent);
 	// var_dump($links_docommunity);
-	// TODO: This is empty right now. Looks like we're not storing any search terms
+	// TODO: This only stores the most recent one. Looks like we're not storing any search terms
 
    // Render the Twig view to actually show things to the user
    return $app['twig']->render('index.twig', [
@@ -110,6 +109,10 @@ $app->get('/', function(Request $request) use ($app) {
       'topics_recent' => $topics_recent, // Array of recent search terms
       'links_docommunity' => $links_docommunity, // Array of links from DO Community tutorial search results
    ]);
+
+   //Is Twig clearing the topics_recent somehow?
+   echo "Y u no execute?<br/>Final recent topics<br/>";
+   var_dump($topics_recent);
 
 });
 
