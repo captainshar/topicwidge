@@ -21,6 +21,9 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.path' => __DIR__.'/views',
 ));
 
+// Makin' a session
+$app->register(new Silex\Provider\SessionServiceProvider());
+
 // Create the GET request for the form
 $app->get('/', function(Request $request) use ($app) {  
 	
@@ -31,10 +34,21 @@ $app->get('/', function(Request $request) use ($app) {
 	if (isset($topics_recent)) {
     	echo "The topics_recent var is set so I will print.";
 	}
-	$topics_recent = isset($topics_recent) ? $topics_recent : [];
+
+	// If topics_recent is set in this session, set it equal to its current value. If not, create an empty array.
+	if (($app['session']->get('topics_recent')) !== null) {
+		$topics_recent = $app['session']->get('topics_recent');
+	}
+	else {
+		$topics_recent = [];
+	}
+
+	
 	if (isset($topics_recent)) {
     	echo "The topics_recent var is set so I will print.";
 	}
+
+	// Initialize the links array
 	$links_docommunity = [];
 
 	// Catch the topic variable from the submission form in index.twig
