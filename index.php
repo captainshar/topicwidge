@@ -117,12 +117,22 @@ $app->get('/', function(Request $request) use ($app) {
 	// var_dump($links_docommunity);
 	// TODO: This only stores the most recent one. Looks like we're not storing any search terms
 
+	return foo;
+
    // Render the Twig view to actually show things to the user
+	// Uncomment after testing
+/*
    return $app['twig']->render('index.twig', [
       'topic' => $topic, // Sending the most recent search term
       'topics_recent' => $topics_recent, // Array of recent search terms
       'links_docommunity' => $links_docommunity, // Array of links from DO Community tutorial search results
    ]);
+*/
+
+   //TODO: Is my session being saved?
+   // Why does the code after the twig part not execute?
+	// If I comment out the twig part the variable resets
+	// but at least the "Y u no execute" executes
 
    //Is Twig clearing the topics_recent somehow?
    echo "Y u no execute?<br/>Final recent topics<br/>";
