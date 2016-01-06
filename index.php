@@ -38,6 +38,7 @@ $app->get('/', function(Request $request) use ($app) {
 	// Initialize the array of recent topics if it's not already set
 	// If topics_recent is set in this session, set it to the session array
 	// If not, create an empty array
+	// TODO: Refactor this to use the "has" method with the session variable
 	if (($app['session']->get('topics_recent')) !== null) {
 		$topics_recent = $app['session']->get('topics_recent');
 	}

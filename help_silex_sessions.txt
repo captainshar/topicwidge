@@ -1,0 +1,98 @@
+Erika's wise words on sessions in Silex.
+
+
+Erika Heidi [10:04 AM] 
+what happens is that Silex, as other frameworks, abstract the session management, to make it easier to deal with
+
+​[10:04] 
+other frameworks might implement it in a slightly different way
+
+Sharon Campbell [10:05 AM] 
+All right. I think that if I remember they’re different from my local variables I can avoid that issue in the future :smile:
+
+Erika Heidi [10:05 AM] 
+but it's just a layer of abstraction over the other method you used before, with the superglobal $_SESSION
+
+Sharon Campbell [10:06 AM] 
+Yeah, I was looking at that $_SESSION thing from before
+
+​[10:06] 
+And I thought maybe it was the same thing as "$app['session']->get('topics_recent’)"
+
+​[10:06] 
+But it seems like it’s not quite the same
+
+​[10:07] 
+Since you can’t treat that quite like a variable. It’s actually a method and you can’t just assign it
+
+​[10:07] 
+Right?
+
+​[10:07] 
+Like you have to use ->set or ->get instead of =
+
+Erika Heidi [10:08 AM] 
+yeah, so let's see this part by part: $app is the application container, it behaves as an array. the $app['session'] is an item of this array, and you can assign it to a variable if it makes it easier to read and understand
+
+​[10:08] 
+$session = $app['session']
+
+​[10:08] 
+now , this $session or $app['session'] is an object
+
+​[10:09] 
+so you have a few different methods you can call to manage your session variables
+
+​[10:09] 
+$session->set('name', 'value') will set the session variable, and you can get it later with $session->get('name')
+
+​[10:09] 
+you cannot assign directly like with the $_SESSION
+
+​[10:10] 
+you need to use the ->set method
+
+Sharon Campbell [10:10 AM] 
+That’s the part that was messing me up!
+
+​[10:10] 
+Yeah, okay
+
+​[10:10] 
+Thank you for explaining that. I see why it’s useful in the code to kind of use it all in a bundle because you’re really only getting at one value
+
+​[10:10] 
+But there are actually like 3 things going on before you get to the value :smile:
+
+Erika Heidi [10:11 AM] 
+yeah, it's not as direct as using $_SESSION but there are many benefits to this approach. for instance, you don't need to check if a variable is set or not
+
+​[10:12] 
+you can do $variable = $session->get('variable') and it will be ok, if the variable is not set, it will just return null
+
+​[10:12] 
+without errors
+
+​[10:12] 
+can be useful
+
+​[10:12] 
+this is also helpful to make it easier to test the applications
+
+Sharon Campbell [10:12 AM] 
+So let’s see. There’s the “app container,” there’s the “object in the container array,” and there’s the "method to assign values to the object"
+
+Erika Heidi [10:12 AM] 
+yes!
+
+​[10:13] 
+the Session object also has some other methods, i dont remember all but there's a useful one "has"
+
+​[10:13] 
+to test if a value is set
+
+​[10:13] 
+I like because it sounds very intuitive
+
+​[10:13] 
+if ($session->has('variable') { do something }
