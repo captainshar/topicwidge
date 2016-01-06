@@ -23,7 +23,7 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.path' => __DIR__.'/views',
 ));
 
-// Makin' a session
+// Makin' a session: a Silex Session
 $app->register(new Silex\Provider\SessionServiceProvider());
 
 
@@ -75,10 +75,7 @@ $app->get('/', function(Request $request) use ($app) {
     	
     	//Get the body of the page from Guzzle, could 'echo $body_tuts;'
     	$body_tuts = $response_tuts->getBody();  
-    	// echo $body_tuts;  	Ew! Why is it looking on localhost for this URL
-    	// When it clearly got content from the Community site with an empty search?
-    	// NotFoundHttpException in RouterListener.php line 159:
-		// No route found for "GET /community/search" (from "http://localhost:8000/")
+    	// echo $body_tuts;
 
     	// Create a DOM parser object so I can wrangle all the HTML I just sucked in
 		$dom = new DOMDocument();
@@ -116,21 +113,17 @@ $app->get('/', function(Request $request) use ($app) {
 		$links_docommunity = $links;
 	}
 	// Sanity checking some variables
-	echo "This is the list of recent topics<br/>";
-	// Add topic to topics_recent
 
-	var_dump($topics_recent);
-	
+	// var_dump($topics_recent);	
 	// var_dump($links_docommunity);
-	// TODO: This only stores the most recent one. Looks like we're not storing any search terms
 
-   // Render the Twig view to actually show things to the user
+ 	// Render the Twig view to actually show things to the user
 
-   return $app['twig']->render('index.twig', [
-      'topic' => $topic, // Sending the most recent search term
-      'topics_lifo' => $topics_lifo, // Array of recent search terms
-      'links_docommunity' => $links_docommunity, // Array of links from DO Community tutorial search results
-   ]);
+ 	return $app['twig']->render('index.twig', [
+		'topic' => $topic, // Sending the most recent search term
+		'topics_lifo' => $topics_lifo, // Array of recent search terms
+		'links_docommunity' => $links_docommunity, // Array of links from DO Community tutorial search results
+	]);
 
 
    //TODO: Why does the code after the twig part not execute?
