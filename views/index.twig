@@ -30,8 +30,8 @@ That's it? We just use the variables from the return $app['twig']->render('index
 
 <!-- TODO: Prettier way to show arrays -->
 
-{% for topic_recent in topics_recent %}
-   {{ dump(topic_recent) }}
+{% for topic_lifo in topics_lifo %}
+   {{ dump(topic_lifo) }}
 {% endfor %}
 
 <!-- Showing search results; need to parse these better -->

@@ -1,5 +1,7 @@
 <?php
 
+// This first section sets up resources like GuzzleHttp and Twig and a Session
+
 // Use Composer's autoload feature for all my classes
 require_once __DIR__.'/vendor/autoload.php';
 
@@ -24,18 +26,18 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
 // Makin' a session
 $app->register(new Silex\Provider\SessionServiceProvider());
 
+
+// This is where the logic starts happening
+
 // Create the GET request for the form
 $app->get('/', function(Request $request) use ($app) {  
 	
-	// Initialize the topic with an empty string
+	// Always set the topic to an empty string
 	$topic = "";
 
 	// Initialize the array of recent topics if it's not already set
-	if (isset($topics_recent)) {
-    	echo "The topics_recent var is set so I will print.";
-	}
-
-	// If topics_recent is set in this session, set it equal to its current value. If not, create an empty array.
+	// If topics_recent is set in this session, set it to the session array
+	// If not, create an empty array
 	if (($app['session']->get('topics_recent')) !== null) {
 		$topics_recent = $app['session']->get('topics_recent');
 	}
@@ -43,18 +45,22 @@ $app->get('/', function(Request $request) use ($app) {
 		$topics_recent = [];
 	}
 
-	
-	if (isset($topics_recent)) {
-    	echo "The topics_recent var is set so I will print.";
-	}
-
-	// Initialize the links array
+	// Always initialize the links array to empty
 	$links_docommunity = [];
 
 	// Catch the topic variable from the submission form in index.twig
 	$topic = $request->query->get('topic');
 
-	// Do all your logic here - use guzzle to make a search, etc. No output yet
+	// Add the topic to the array of recent topics
+	$topics_recent[] = $topic;
+
+	// the session variable is its own thing; need to update that too
+	$app['session']->set('topics_recent', $topics_recent);
+
+	// finally, make a display version that reverses the order
+	$topics_lifo = array_reverse($topics_recent, true);
+
+	// Now that we have our search term and other vars, start doing things with the user data
 
 	// Create base URL for request for a new Guzzle object
 	$client_tuts = new Client(['base_uri' => 'https://www.digitalocean.com/']);
@@ -112,29 +118,22 @@ $app->get('/', function(Request $request) use ($app) {
 	// Sanity checking some variables
 	echo "This is the list of recent topics<br/>";
 	// Add topic to topics_recent
-	$topics_recent[] = $topic;
+
 	var_dump($topics_recent);
-	// the session variable is its own thing; need to set that too
-	$app['session']->set('topics_recent', $topics_recent);
+	
 	// var_dump($links_docommunity);
 	// TODO: This only stores the most recent one. Looks like we're not storing any search terms
 
-	return foo;
-
    // Render the Twig view to actually show things to the user
-	// Uncomment after testing
-/*
+
    return $app['twig']->render('index.twig', [
       'topic' => $topic, // Sending the most recent search term
-      'topics_recent' => $topics_recent, // Array of recent search terms
+      'topics_lifo' => $topics_lifo, // Array of recent search terms
       'links_docommunity' => $links_docommunity, // Array of links from DO Community tutorial search results
    ]);
-*/
 
-   //TODO: Is my session being saved?
-   // Why does the code after the twig part not execute?
-	// If I comment out the twig part the variable resets
-	// but at least the "Y u no execute" executes
+
+   //TODO: Why does the code after the twig part not execute?
 
    //Is Twig clearing the topics_recent somehow?
    echo "Y u no execute?<br/>Final recent topics<br/>";
