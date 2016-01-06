@@ -114,6 +114,8 @@ $app->get('/', function(Request $request) use ($app) {
 	// Add topic to topics_recent
 	$topics_recent[] = $topic;
 	var_dump($topics_recent);
+	// the session variable is its own thing; need to set that too
+	$app['session']->set('topics_recent', $topics_recent);
 	// var_dump($links_docommunity);
 	// TODO: This only stores the most recent one. Looks like we're not storing any search terms
 
