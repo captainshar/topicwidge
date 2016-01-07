@@ -30,14 +30,39 @@ That's it? We just use the variables from the return $app['twig']->render('index
 
 <!-- TODO: Prettier way to show arrays -->
 
+{# Revive this again if I need to dump variables
+
 {% for topic_lifo in topics_lifo %}
    {{ dump(topic_lifo) }}
 {% endfor %}
 
-<!-- Showing search results; need to parse these better -->
 {% for link_docommunity in links_docommunity %}
    {{ dump(link_docommunity) }}
 {% endfor %}
+
+#}
+
+<!-- Show the recent search topics -->
+
+<ul>
+    {% for topic_lifo in topics_lifo %}
+        <li>{{ topic_lifo|e }}</li>
+    {% else %}
+        <li><em>Please enter a search topic.</em></li>
+    {% endfor %}
+</ul>
+
+
+<!-- Showing search results for DO Community -->
+
+<ul>
+    {% for link_docommunity in links_docommunity %}
+        <li><a href={{ link_docommunity.href|e }}>{{ link_docommunity.text|e }}</a></li>
+    {% else %}
+        <li><em>No DO Community Results</em></li>
+    {% endfor %}
+</ul>
+
 
 </body>
 </html>
