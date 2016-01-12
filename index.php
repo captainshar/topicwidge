@@ -72,7 +72,7 @@ $app->get('/', function(Request $request) use ($app) {
 	// If I got a successful 200 response from the page, parse it 
 	// Could check with'$code = $response_tuts->getStatusCode();'
 	if ($response_tuts->getStatusCode() == 200) {
-    	echo "Request was successful<br/>";
+    	// echo "Request was successful<br/>";
     	
     	//Get the body of the page from Guzzle, could 'echo $body_tuts;'
     	$body_tuts = $response_tuts->getBody();  

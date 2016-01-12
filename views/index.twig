@@ -20,6 +20,8 @@
 </head>
 
 <body>
+<div class="container">
+<div class="row  text-center">
 
 <!-- Search form -->
 <form  method="GET" action="index.php"  id="searchform"> 
@@ -42,19 +44,8 @@ That's it? We just use the variables from the return $app['twig']->render('index
 
 <p>You searched for the topic {{ topic }}.</p>
 
+
 <!-- TODO: Prettier way to show arrays -->
-
-{# Revive this again if I need to dump variables
-
-{% for topic_lifo in topics_lifo %}
-   {{ dump(topic_lifo) }}
-{% endfor %}
-
-{% for link_docommunity in links_docommunity %}
-   {{ dump(link_docommunity) }}
-{% endfor %}
-
-#}
 
 <!-- Show the recent search topics -->
 
@@ -65,6 +56,10 @@ That's it? We just use the variables from the return $app['twig']->render('index
         <li><em>Please enter a search topic.</em></li>
     {% endfor %}
 </ul>
+
+</div>
+
+<div class="row">
 
 
 <!-- Showing search results for DO Community -->
@@ -77,6 +72,7 @@ That's it? We just use the variables from the return $app['twig']->render('index
     {% endfor %}
 </ul>
 
-
+</div>
+</div>
 </body>
 </html>
