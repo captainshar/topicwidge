@@ -5,6 +5,7 @@
 // Use Composer's autoload feature for all my classes
 require_once __DIR__.'/vendor/autoload.php';
 
+
 // Use Guzzle to display the search results from the DO community tutorials
 use GuzzleHttp\Client;
 
