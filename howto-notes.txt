@@ -1,0 +1,50 @@
+After creating a new Rails app,
+
+Go to config/routes.rb and start adding “routes” which respond to URLs that you visit, and they look like this:
+
+root to: "home#index"
+
+Where root refers to the “index page” of the site, and home is the name of a controller and index is the name of a method in that controller.
+
+root is a method that takes a hash of “to” and some value. Ruby often uses hashes of known keys and unknown values to supply information to its methods.
+
+
+Then, make sure there is a corresponding controller!
+
+Example:
+
+Create controllers/home_controller.rb
+
+This should contain the method that was referenced in routes.rb; for example, index
+
+
+Adding another route to routes.rb, ABOVE the root one:
+
+get "search", to: "home#index"
+
+This uses the URL /search and uses the same index method in the home_controller.rb controller
+
+
+
+If there’s no matching method for a controller, it will go to /app/views/<controller_name> where controller_name is the short name of the controller, and render an index file from there, e.g. index.html.erb.
+
+
+Useful website for testing javascript on the fly:
+
+https://jsfiddle.net/#run
+
+Add our index.html.erb and our home.js
+
+
+Note: the javascript was loading before the form, so we had to wrap it in
+
+$(document).ready(function() {
+ });
+
+
+~~~~~~
+
+On to the community search!
+
+
+
