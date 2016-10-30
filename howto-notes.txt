@@ -62,7 +62,88 @@ On to the community search!
 
 Use Nokogiri to scrape the community page and have app/controllers/api/communities_controller.rb show the results from that page.
 
+After installing Nokogiri, adding it to my Gemfile, and running bundle install,
 
+I was able to add the following lines to app/controllers/api/communities_controller.rb:
+
+
+    require 'open-uri'
+    @doc = Nokogiri::HTML(open("https://www.digitalocean.com/community/search?q=coreos"))
+    articles = @doc.css("div.feedable-details a")
+    puts articles
+
+This uses a request to a static page, https://www.digitalocean.com/community/search?q=coreos.
+
+TODO: Sub in that “term” variable!
+
+It grabs the page as a Nokogiri object, and then I searched through it for items related to the CSS descriptor feedable-details.
+
+I don’t remember how to show things on the page yet so I’m just using “puts” to send the output to the terminal.
+
+So far it looks like I got what I wanted in the terminal!
+
+TODO: Clean up the requested output a little more, and figure out how to properly display it on the app web page. (Probably need a view for this?)
+
+TODO: Parse multiple web pages from the community site
+
+
+Started GET "/api/community?term=coreos" for ::1 at 2016-10-30 15:17:48 -0400
+Processing by Api::CommunitiesController#show as HTML
+  Parameters: {"term"=>"coreos"}
+<a href="/community/tutorials/an-introduction-to-coreos-system-components">An Introduction to <em>CoreOS</em> System Components</a>
+<a class="series" data-toggle="tooltip" href="/community/tutorial_series/getting-started-with-coreos-2" title="Getting Started with CoreOS">Series 1/9</a>
+<a href="/community/tutorials/how-to-set-up-a-coreos-cluster-on-digitalocean">How To Set Up a <em>CoreOS</em> Cluster on DigitalOcean</a>
+<a class="series" data-toggle="tooltip" href="/community/tutorial_series/getting-started-with-coreos-2" title="Getting Started with CoreOS">Series 2/9</a>
+<a href="/community/tutorials/how-to-create-and-run-a-service-on-a-coreos-cluster">How To Create and Run a Service on a <em>CoreOS</em> Cluster</a>
+<a class="series" data-toggle="tooltip" href="/community/tutorial_series/getting-started-with-coreos-2" title="Getting Started with CoreOS">Series 5/9</a>
+<a href="/community/tutorials/how-to-install-and-configure-kubernetes-on-top-of-a-coreos-cluster">How To Install and Configure Kubernetes on top of a <em>CoreOS</em> Cluster</a>
+<a href="/community/tutorials/how-to-perform-continuous-integration-testing-with-drone-io-on-coreos-and-docker">How To Perform Continuous Integration Testing with Drone.io on <em>CoreOS</em> and Docker</a>
+<a href="/community/tutorials/how-to-use-fleet-and-fleetctl-to-manage-your-coreos-cluster">How To Use Fleet and Fleetctl to Manage your <em>CoreOS</em> Cluster</a>
+<a class="series" data-toggle="tooltip" href="/community/tutorial_series/getting-started-with-coreos-2" title="Getting Started with CoreOS">Series 3/9</a>
+<a href="/community/tutorials/how-to-use-confd-and-etcd-to-dynamically-reconfigure-services-in-coreos">How To Use Confd and Etcd to Dynamically Reconfigure Services in <em>CoreOS</em></a>
+<a class="series" data-toggle="tooltip" href="/community/tutorial_series/getting-started-with-coreos-2" title="Getting Started with CoreOS">Series 7/9</a>
+<a href="/community/tutorials/how-to-use-etcdctl-and-etcd-coreos-s-distributed-key-value-store">How To Use Etcdctl and Etcd, <em>CoreOS</em>'s Distributed Key-Value Store</a>
+<a class="series" data-toggle="tooltip" href="/community/tutorial_series/getting-started-with-coreos-2" title="Getting Started with CoreOS">Series 4/9</a>
+<a href="/community/tutorials/how-to-create-flexible-services-for-a-coreos-cluster-with-fleet-unit-files">How to Create Flexible Services for a <em>CoreOS</em> Cluster with Fleet Unit Files</a>
+<a class="series" data-toggle="tooltip" href="/community/tutorial_series/getting-started-with-coreos-2" title="Getting Started with CoreOS">Series 6/9</a>
+<a href="/community/tutorials/how-to-secure-your-coreos-cluster-with-tls-ssl-and-firewall-rules">How To Secure Your <em>CoreOS</em> Cluster with TLS/SSL and Firewall Rules</a>
+<a class="series" data-toggle="tooltip" href="/community/tutorial_series/getting-started-with-coreos-2" title="Getting Started with CoreOS">Series 9/9</a>
+<a href="/community/tutorials/how-to-use-the-ambassador-pattern-to-dynamically-configure-services-on-coreos">How To Use the Ambassador Pattern to Dynamically Configure Services on <em>CoreOS</em></a>
+<a href="/community/tutorials/how-to-troubleshoot-common-issues-with-your-coreos-servers">How To Troubleshoot Common Issues with your <em>CoreOS</em> Servers</a>
+<a class="series" data-toggle="tooltip" href="/community/tutorial_series/getting-started-with-coreos-2" title="Getting Started with CoreOS">Series 8/9</a>
+<a href="/community/tutorials/how-to-securely-set-up-shipyard-2-0-10-with-tls-on-coreos">How To Securely Set Up Shipyard 2.0.10 with TLS on <em>CoreOS</em></a>
+<a href="/community/questions/resizing-digital-ocean-droplets-that-use-coreos-break-the-coreos-cluster">Resizing Digital Ocean Droplets that use <em>CoreOS</em> break the <em>CoreOs</em> Cluster.</a>
+<a href="/community/users/milo388195">
+              milo388195
+            </a>
+<a href="/community/questions/how-can-i-use-block-storage-with-a-coreos-cluster">How can I use block storage with a <em>coreos</em> cluster?</a>
+<a href="/community/users/leesylvester">
+              leesylvester
+            </a>
+<a href="/community/questions/docker-tcp-socket-fails-on-coreos">docker-tcp.socket fails on <em>coreos</em></a>
+<a href="/community/users/pancake">
+              PanCake
+            </a>
+<a href="/community/questions/coreos-setup-error-503-fleet-server-unable-to-communicate-with-etcd"><em>CoreOS</em> Setup: Error 503: fleet server unable to communicate with etcd</a>
+<a href="/community/users/computer-geek-c">
+              computer.geek.c
+            </a>
+<a href="/community/questions/coreos-fleet-clustering-high-availability-problem"><em>CoreOS</em> Fleet Clustering High Availability Problem</a>
+<a href="/community/users/jhahm">
+              JHahm
+            </a>
+<a href="/community/questions/simplest-way-to-use-coreos-with-wordpress">Simplest way to use <em>CoreOS</em> with Wordpress?</a>
+<a href="/community/users/eli160638">
+              eli160638
+            </a>
+<a href="/community/questions/why-some-time-my-coreos-hangs">Why some time  my <em>coreos</em> hangs?</a>
+<a href="/community/users/nonlux">
+              nonlux
+            </a>
+<a href="/community/questions/recovery-of-a-coreos-image">Recovery of a <em>CoreOS</em> image</a>
+<a href="/community/users/texascacto">
+              texascacto
+            </a>
 
 
 
