@@ -1,3 +1,9 @@
+rails s
+
+^to start the project. Visit localhost:3000 to see the app
+
+~~~
+
 After creating a new Rails app,
 
 Go to config/routes.rb and start adding “routes” which respond to URLs that you visit, and they look like this:
@@ -42,9 +48,21 @@ $(document).ready(function() {
  });
 
 
+Use this URL to test search terms:
+
+http://localhost:3000/api/community?term=foo
+
+Right now this is using the code from app/controllers/api/communities_controller.rb
+
+And it shows a JSON output of the term
+
 ~~~~~~
 
 On to the community search!
+
+Use Nokogiri to scrape the community page and have app/controllers/api/communities_controller.rb show the results from that page.
+
+
 
 
 
