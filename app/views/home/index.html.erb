@@ -1,5 +1,5 @@
 <p>
-	<form action="/" id="topicsearch">
+	<form action="/" id="topicsearch" onsubmit="trendsFrameFunction()">
 		<input type="text" id="searchterm">
 		<input type="submit">
 	</form>
@@ -8,3 +8,20 @@
 <div id="community-results">
 
 </div>
+
+<div id="trends-results">
+	<!-- We replace the default src for the iframe
+	with the one from the JavaScript trendsFrameFunction()
+	-->
+	<iframe id="trendsFrame" scrolling="no" style="border:none;" width="640" height="330" src="/api/community">
+  		<p>Your browser does not support iframes.</p>
+	</iframe>
+</div>
+
+<script>
+function trendsFrameFunction() {
+    var searchterm = document.getElementById("searchterm").value;
+
+    document.getElementById("trendsFrame").src = "http://www.google.com/trends/fetchComponent?hl=en-US&q=" + searchterm + "&cmpt=q&content=1&cid=TIMESERIES_GRAPH_0&export=5&w=640&h=330";
+}
+</script>

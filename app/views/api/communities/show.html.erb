@@ -1,2 +1,5 @@
 <h1>This is the Community view, hopefully!</h1>
-<%= @articles.inspect %>
+<%- @articles.each do |article| %>
+  <%= article['href'] %>
+  <%= article.text %> <br />
+<%- end %>
