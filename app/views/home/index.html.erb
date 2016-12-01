@@ -1,12 +1,12 @@
 <p>
-	<form action="/" id="topicsearch" onsubmit="trendsFrameFunction()">
+	<form action="/" id="topicsearch">
 		<input type="text" id="searchterm">
 		<input type="submit">
 	</form>
 </p>
 
 <div id="community-results">
-
+<!-- This is a placeholder that gets filled up by the javascript with the same id -->
 </div>
 
 <div id="trends-results">
@@ -17,11 +17,3 @@
   		<p>Your browser does not support iframes.</p>
 	</iframe>
 </div>
-
-<script>
-function trendsFrameFunction() {
-    var searchterm = document.getElementById("searchterm").value;
-
-    document.getElementById("trendsFrame").src = "http://www.google.com/trends/fetchComponent?hl=en-US&q=" + searchterm + "&cmpt=q&content=1&cid=TIMESERIES_GRAPH_0&export=5&w=640&h=330";
-}
-</script>
